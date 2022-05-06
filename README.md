@@ -25,7 +25,7 @@ A snake game written in HTML and javascript that is hosted on github pages.
    - Add apples that increase the size of the snake.
 
 ## Week 3: Develop & Review
-- Make the game look better
+- Make the game look better & add some funtionality
    - Add texture or color to canvas, snake and apples.
    - Keep track of apples eaten in the form of a counter or points.
    - Add additional functionality, like rotten apples that decrease the size of the snake or other food that adds more points.
