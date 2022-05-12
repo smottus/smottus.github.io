@@ -1,97 +1,134 @@
+// Canvas dimensions:
 // 21x19
 // 672x608
 // 17x17
 // 544x544
 
-var cvs = document.getElementById("myCanvas");
-var ctx = cvs.getContext("2d");
+const cvs = document.getElementById("myCanvas");
+const ctx = cvs.getContext("2d");
 ctx.font = "40px Arial";
-ctx.fillStyle = "white";
+ctx.fillStyle = "#efeff1";
 
-var background = new Image();
+const background = new Image();
 background.src = "pics/bg.png";
 
-var apple = new Image();
+const apple = new Image();
 apple.src = "pics/apple.png";
 
-var orm = new Image();
-orm.src = "pics/snake.png";
+const snakeImg = new Image();
+snakeImg.src = "pics/snake.png";
 
-var time = 100;
-var ruta = 32;
-var points = 0;
-var dir = "RIGHT";
-var snake = [];
+const rows = (columns = 17);
+const time = 1000;
+const square = 32;
+let points = 0;
+let snake = [];
+let speed = 10; // Implement an increase when you get more points.
+
 snake[0] = {
-  x : 9*ruta,
-  y : 11*ruta
+  x: 9 * square,
+  y: 11 * square,
 };
+
 var food = {
-  x : ruta + Math.floor(Math.random() * 17)*ruta,
-  y : 3*ruta + Math.floor(Math.random() * 17)*ruta
+  x : square + Math.floor(Math.random() * rows) * square,
+  y : 3 * square + Math.floor(Math.random() * columns) * square
 }
+
 
 window.addEventListener("keydown", (e) => {
   switch (e.key) {
     case "ArrowLeft":
     case "A":
     case "a":
-      if(dir != "RIGHT"){dir = "LEFT";}
+      if (dir !== "right") {
+        dir = "left";
+      }
       break;
     case "ArrowRight":
     case "D":
     case "d":
-      if(dir != "LEFT"){dir = "RIGHT";}
-        break;
+      if (dir !== "left") {
+        dir = "right";
+      }
+      break;
     case "ArrowUp":
     case "W":
     case "w":
-      if(dir != "DOWN"){dir = "UP";}
-        break;
+      if (dir !== "down") {
+        dir = "up";
+      }
+      break;
     case "ArrowDown":
     case "S":
     case "s":
-        if(dir != "UP"){dir = "DOWN";}
-        break;
+      if (dir !== "up") {
+        dir = "down";
+      }
+      break;
     case "R":
     case "r":
     case "Enter":
-        location.reload();
-}});
-
-function draw(){
-  ctx.drawImage(background,0,0);
-  ctx.fillText(points, 2.2*ruta, 1.6*ruta);
-  ctx.drawImage(apple, 1*ruta, 0.6*ruta);
-  ctx.drawImage(apple,food.x,food.y);
-
-  ctx.drawImage(orm,snake[0].x,snake[0].y);
-  switch(dir) {
-    case "LEFT":
-      snake[0].x -= ruta;
-      break;
-    case "UP":
-      snake[0].y -= ruta;
-      break;
-    case "RIGHT":
-      snake[0].x += ruta;
-      break;
-    case "DOWN":
-      snake[0].y += ruta;
-      break;
-  };
-
-  if(snake[0].x == food.x && snake[0].y == food.y){
-    food.x = ruta + Math.floor(Math.random() * 17)*ruta;
-    food.y = 3*ruta + Math.floor(Math.random() * 17)*ruta;
-    points++;
+      location.reload();
   }
+});
 
-  if(snake[0].x==0||snake[0].x==18*ruta||snake[0].y==2*ruta||snake[0].y==20*ruta){
-    clearInterval(intervalID);
+function ouroboros() {
+  for (let i = 1; i < snake.length; i++) {
+    if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
+      return true;
+    }
   }
-
+  return false;
 }
 
+function draw() {
+  ctx.drawImage(background, 0, 0);
+  ctx.fillText(points.toString(), 2.1 * square, 1.6 * square);
+  ctx.drawImage(apple, square, 0.6 * square);
+  ctx.drawImage(apple, food.x,food.y);
 
-var intervalID = setInterval(draw,time);
+  for (let i = 0; i < snake.length; i++) {
+    ctx.drawImage(snakeImg, snake[i].x, snake[i].y);
+  }
+
+  switch (dir) {
+    case "left":
+      snake[0].x -= square;
+      break;
+    case "up":
+      snake[0].y -= square;
+      break;
+    case "right":
+      snake[0].x += square;
+      break;
+    case "down":
+      snake[0].y += square;
+      break;
+  }
+  
+  if(snake[0].x == food.x && snake[0].y == food.y){
+    food.x = square + Math.floor(Math.random() * rows) * square;
+    food.y = 3 * square + Math.floor(Math.random() * columns) * square;
+    points++;
+  } else if (snake.length > 1) {
+    snake.pop();
+  }
+
+  let nextHead = {
+    x: snake[0].x,
+    y: snake[0].y,
+  };
+
+  if (
+    snake[0].x === 0 ||
+    snake[0].x === 18 * square ||
+    snake[0].y === 2 * square ||
+    snake[0].y === 20 * square ||
+    ouroboros()
+  ) {
+    clearInterval(intervalID);
+  }
+  snake.unshift(nextHead);
+}
+let intervalID = setInterval(draw, time / speed);
