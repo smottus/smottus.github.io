@@ -30,9 +30,11 @@ snake[0] = {
   y: 11 * square,
 };
 
-let dir = "right";
-let appleX = square + Math.floor(Math.random() * rows) * square;
-let appleY = 3 * square + Math.floor(Math.random() * columns) * square;
+var food = {
+  x : square + Math.floor(Math.random() * rows) * square,
+  y : 3 * square + Math.floor(Math.random() * columns) * square
+}
+
 
 window.addEventListener("keydown", (e) => {
   switch (e.key) {
@@ -84,7 +86,7 @@ function draw() {
   ctx.drawImage(background, 0, 0);
   ctx.fillText(points.toString(), 2.1 * square, 1.6 * square);
   ctx.drawImage(apple, square, 0.6 * square);
-  ctx.drawImage(apple, appleX, appleY);
+  ctx.drawImage(apple, food.x,food.y);
 
   for (let i = 0; i < snake.length; i++) {
     ctx.drawImage(snakeImg, snake[i].x, snake[i].y);
@@ -104,10 +106,10 @@ function draw() {
       snake[0].y += square;
       break;
   }
-
-  if (snake[0].x === appleX && snake[0].y === appleY) {
-    appleX = square + Math.floor(Math.random() * rows) * square;
-    appleY = 3 * square + Math.floor(Math.random() * columns) * square;
+  
+  if(snake[0].x == food.x && snake[0].y == food.y){
+    food.x = square + Math.floor(Math.random() * rows) * square;
+    food.y = 3 * square + Math.floor(Math.random() * columns) * square;
     points++;
   } else if (snake.length > 1) {
     snake.pop();
