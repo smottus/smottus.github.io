@@ -17,6 +17,7 @@ apple.src = "pics/apple.png";
 var orm = new Image();
 orm.src = "pics/snake.png";
 
+var time = 100;
 var ruta = 32;
 var points = 0;
 var snake = [];
@@ -24,50 +25,70 @@ snake[0] = {
   x : 9*ruta,
   y : 11*ruta
 };
-var dir = "right";
+var dir = "RIGHT";
+var appleX = ruta + Math.floor(Math.random() * 17)*ruta;
+var appleY = 3*ruta + Math.floor(Math.random() * 17)*ruta;
 
-document.addEventListener('keydown', function(e) {
-  switch (e.keyCode) {
-    case 37:
-      dir = "left";
-      break;
-    case 38:
-      dir = "up";
-      break;
-    case 39:
-      dir = "right";
-      break;
-    case 40:
-      dir = "down";
-      break;
-  }
-});
+window.addEventListener("keydown", (e) => {
+    switch (e.key) {
+        case "ArrowLeft":
+        case "A":
+        case "a":
+            dir = "LEFT";
+            break;
+        case "ArrowRight":
+        case "D":
+        case "d":
+            dir = "RIGHT";
+            break;
+        case "ArrowUp":
+        case "W":
+        case "w":
+            dir = "UP";
+            break;
+        case "ArrowDown":
+        case "S":
+        case "s":
+            dir = "DOWN";
+            break;
+        case "R":
+        case "r":
+        case "Enter":
+            location.reload();
+}});
 
 function draw(){
   ctx.drawImage(background,0,0);
   ctx.fillText(points, 2*ruta, 2*ruta);
-  var x = ruta + Math.floor(Math.random() * 17)*ruta;
-  var y = 3*ruta + Math.floor(Math.random() * 17)*ruta;
-  ctx.drawImage(apple,x,y);
+  ctx.drawImage(apple,appleX,appleY);
 
   ctx.drawImage(orm,snake[0].x,snake[0].y);
   switch(dir) {
-    case "left":
+    case "LEFT":
       snake[0].x -= ruta;
       break;
-    case "up":
+    case "UP":
       snake[0].y -= ruta;
       break;
-    case "right":
+    case "RIGHT":
       snake[0].x += ruta;
       break;
-    case "down":
+    case "DOWN":
       snake[0].y += ruta;
       break;
+  };
 
-};
+  if(snake[0].x == appleX && snake[0].y == appleY){
+    appleX = ruta + Math.floor(Math.random() * 17)*ruta;
+    appleY = 3*ruta + Math.floor(Math.random() * 17)*ruta;
+    points++;
+  }
+
+  if(snake[0].x==0||snake[0].x==18*ruta||snake[0].y==2*ruta||snake[0].y==20*ruta){
+    clearInterval(intervalID);
+  }
 
 }
 
 
-var intervalID = setInterval(draw,100);
+var intervalID = setInterval(draw,time);
