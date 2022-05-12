@@ -5,7 +5,7 @@
 
 var cvs = document.getElementById("myCanvas");
 var ctx = cvs.getContext("2d");
-ctx.font = "50px Arial";
+ctx.font = "40px Arial";
 ctx.fillStyle = "white";
 
 var background = new Image();
@@ -20,47 +20,50 @@ orm.src = "pics/snake.png";
 var time = 100;
 var ruta = 32;
 var points = 0;
+var dir = "RIGHT";
 var snake = [];
 snake[0] = {
   x : 9*ruta,
   y : 11*ruta
 };
-var dir = "RIGHT";
-var appleX = ruta + Math.floor(Math.random() * 17)*ruta;
-var appleY = 3*ruta + Math.floor(Math.random() * 17)*ruta;
+var food = {
+  x : ruta + Math.floor(Math.random() * 17)*ruta,
+  y : 3*ruta + Math.floor(Math.random() * 17)*ruta
+}
 
 window.addEventListener("keydown", (e) => {
-    switch (e.key) {
-        case "ArrowLeft":
-        case "A":
-        case "a":
-            dir = "LEFT";
-            break;
-        case "ArrowRight":
-        case "D":
-        case "d":
-            dir = "RIGHT";
-            break;
-        case "ArrowUp":
-        case "W":
-        case "w":
-            dir = "UP";
-            break;
-        case "ArrowDown":
-        case "S":
-        case "s":
-            dir = "DOWN";
-            break;
-        case "R":
-        case "r":
-        case "Enter":
-            location.reload();
+  switch (e.key) {
+    case "ArrowLeft":
+    case "A":
+    case "a":
+      if(dir != "RIGHT"){dir = "LEFT";}
+      break;
+    case "ArrowRight":
+    case "D":
+    case "d":
+      if(dir != "LEFT"){dir = "RIGHT";}
+        break;
+    case "ArrowUp":
+    case "W":
+    case "w":
+      if(dir != "DOWN"){dir = "UP";}
+        break;
+    case "ArrowDown":
+    case "S":
+    case "s":
+        if(dir != "UP"){dir = "DOWN";}
+        break;
+    case "R":
+    case "r":
+    case "Enter":
+        location.reload();
 }});
 
 function draw(){
   ctx.drawImage(background,0,0);
-  ctx.fillText(points, 2*ruta, 2*ruta);
-  ctx.drawImage(apple,appleX,appleY);
+  ctx.fillText(points, 2.2*ruta, 1.6*ruta);
+  ctx.drawImage(apple, 1*ruta, 0.6*ruta);
+  ctx.drawImage(apple,food.x,food.y);
 
   ctx.drawImage(orm,snake[0].x,snake[0].y);
   switch(dir) {
@@ -78,9 +81,9 @@ function draw(){
       break;
   };
 
-  if(snake[0].x == appleX && snake[0].y == appleY){
-    appleX = ruta + Math.floor(Math.random() * 17)*ruta;
-    appleY = 3*ruta + Math.floor(Math.random() * 17)*ruta;
+  if(snake[0].x == food.x && snake[0].y == food.y){
+    food.x = ruta + Math.floor(Math.random() * 17)*ruta;
+    food.y = 3*ruta + Math.floor(Math.random() * 17)*ruta;
     points++;
   }
 
