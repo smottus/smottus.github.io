@@ -21,19 +21,20 @@ snakeImg.src = "pics/snake.png";
 const rows = (columns = 17);
 const time = 1000;
 const square = 32;
+let dir = "right";
 let points = 0;
 let snake = [];
 let speed = 10; // Implement an increase when you get more points.
 
 snake[0] = {
   x: 9 * square,
-  y: 11 * square,
+  y: 11 * square
 };
 
 var food = {
   x : square + Math.floor(Math.random() * rows) * square,
   y : 3 * square + Math.floor(Math.random() * columns) * square
-}
+};
 
 
 window.addEventListener("keydown", (e) => {
@@ -106,7 +107,7 @@ function draw() {
       snake[0].y += square;
       break;
   }
-  
+
   if(snake[0].x == food.x && snake[0].y == food.y){
     food.x = square + Math.floor(Math.random() * rows) * square;
     food.y = 3 * square + Math.floor(Math.random() * columns) * square;
