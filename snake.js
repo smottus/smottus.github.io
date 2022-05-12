@@ -25,6 +25,8 @@ snake[0] = {
   y : 11*ruta
 };
 var dir = "right";
+var appleX = ruta + Math.floor(Math.random() * 17)*ruta;
+var appleY = 3*ruta + Math.floor(Math.random() * 17)*ruta;
 
 document.addEventListener('keydown', function(e) {
   switch (e.keyCode) {
@@ -46,9 +48,7 @@ document.addEventListener('keydown', function(e) {
 function draw(){
   ctx.drawImage(background,0,0);
   ctx.fillText(points, 2*ruta, 2*ruta);
-  var x = ruta + Math.floor(Math.random() * 17)*ruta;
-  var y = 3*ruta + Math.floor(Math.random() * 17)*ruta;
-  ctx.drawImage(apple,x,y);
+  ctx.drawImage(apple,appleX,appleY);
 
   ctx.drawImage(orm,snake[0].x,snake[0].y);
   switch(dir) {
@@ -64,8 +64,13 @@ function draw(){
     case "down":
       snake[0].y += ruta;
       break;
+  };
 
-};
+  if(snake[0].x == appleX && snake[0].y == appleY){
+    appleX = ruta + Math.floor(Math.random() * 17)*ruta;
+    appleY = 3*ruta + Math.floor(Math.random() * 17)*ruta;
+    points++;
+  }
 
 }
 
