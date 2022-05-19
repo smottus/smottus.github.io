@@ -15,6 +15,9 @@ background.src = "pics/bg.png";
 const apple = new Image();
 apple.src = "pics/apple.png";
 
+const goldenApple = new Image();
+goldenApple.src = "pics/gapple.png";
+
 const snakeImg = new Image();
 snakeImg.src = "pics/snake.png";
 
@@ -26,6 +29,7 @@ let points = 0;
 let snake = [];
 let speed = 10; // Implement an increase when you get more points.
 
+
 snake[0] = {
   x: 9 * square,
   y: 11 * square
@@ -35,6 +39,13 @@ var food = {
   x : square + Math.floor(Math.random() * rows) * square,
   y : 3 * square + Math.floor(Math.random() * columns) * square
 };
+
+var gapple = {
+  x : square + Math.floor(Math.random() * rows) * square,
+  y : 3 * square + Math.floor(Math.random() * columns) * square
+}
+
+let gOnOff = 0;
 
 
 window.addEventListener("keydown", (e) => {
@@ -83,11 +94,24 @@ function ouroboros() {
   return false;
 }
 
+function makeGapple() {
+  let g = Math.floor(Math.random() * 1000);
+  if(g > 990){
+      gOnOff = 1;
+      gapple.x = square + Math.floor(Math.random() * rows) * square;
+      gapple.y = 3 * square + Math.floor(Math.random() * columns) * square;
+  }
+}
+
+
 function draw() {
   ctx.drawImage(background, 0, 0);
   ctx.fillText(points.toString(), 2.1 * square, 1.6 * square);
   ctx.drawImage(apple, square, 0.6 * square);
   ctx.drawImage(apple, food.x,food.y);
+  if(gOnOff == 1) {ctx.drawImage(goldenApple, gapple.x, gapple.y);}
+  else {makeGapple();}
+  speed = 1000;
 
   for (let i = 0; i < snake.length; i++) {
     ctx.drawImage(snakeImg, snake[i].x, snake[i].y);
@@ -116,6 +140,10 @@ function draw() {
     snake.pop();
   }
 
+  if(snake[0].x == gapple.x && snake[0].y == gapple.y){
+    gOnOff = 0;
+    points = points + 2;}
+
   let nextHead = {
     x: snake[0].x,
     y: snake[0].y,
@@ -132,4 +160,6 @@ function draw() {
   }
   snake.unshift(nextHead);
 }
+
+
 let intervalID = setInterval(draw, time / speed);
