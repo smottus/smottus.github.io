@@ -10,7 +10,7 @@ ctx.font = "40px Arial";
 ctx.fillStyle = "#efeff1";
 
 const background = new Image();
-background.src = "pics/bg.png";
+background.src = "pics/bg2.png";
 
 const apple = new Image();
 apple.src = "pics/apple.png";
@@ -31,17 +31,17 @@ let speed = 10; // Implement an increase when you get more points.
 
 
 snake[0] = {
-  x: 9 * square,
+  x: 19 * square,
   y: 11 * square
 };
 
 var food = {
-  x : square + Math.floor(Math.random() * rows) * square,
+  x : 11 * square + Math.floor(Math.random() * rows) * square,
   y : 3 * square + Math.floor(Math.random() * columns) * square
 };
 
 var gapple = {
-  x : square + Math.floor(Math.random() * rows) * square,
+  x : 11 * square + Math.floor(Math.random() * rows) * square,
   y : 3 * square + Math.floor(Math.random() * columns) * square
 }
 
@@ -98,7 +98,7 @@ function makeGapple() {
   let g = Math.floor(Math.random() * 1000);
   if(g > 990){
       gOnOff = 1;
-      gapple.x = square + Math.floor(Math.random() * rows) * square;
+      gapple.x = 11 * square + Math.floor(Math.random() * rows) * square;
       gapple.y = 3 * square + Math.floor(Math.random() * columns) * square;
       setTimeout(switchgOnOff, 5000);
   }
@@ -112,8 +112,8 @@ function switchgOnOff() {
 
 function draw() {
   ctx.drawImage(background, 0, 0);
-  ctx.fillText(points.toString(), 2.1 * square, 1.6 * square);
-  ctx.drawImage(apple, square, 0.6 * square);
+  ctx.fillText(points.toString(), 12.1 * square, 1.6 * square);
+  ctx.drawImage(apple, 11*square, 0.6 * square);
   ctx.drawImage(apple, food.x,food.y);
   if(gOnOff === 1) {ctx.drawImage(goldenApple, gapple.x, gapple.y);}
   else {makeGapple();}
@@ -157,8 +157,8 @@ function draw() {
   };
 
   if (
-    snake[0].x === 0 ||
-    snake[0].x === 18 * square ||
+    snake[0].x === 10 * square ||
+    snake[0].x === 28 * square ||
     snake[0].y === 2 * square ||
     snake[0].y === 20 * square ||
     ouroboros()
