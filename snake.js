@@ -139,7 +139,7 @@ function draw() {
   }
 
   if(snake[0].x === food.x && snake[0].y === food.y){
-    food.x = square + Math.floor(Math.random() * rows) * square;
+    food.x = 11*square + Math.floor(Math.random() * rows) * square;
     food.y = 3 * square + Math.floor(Math.random() * columns) * square;
     points++;
   } else if(snake[0].x === gapple.x && snake[0].y === gapple.y && gOnOff === 1){
