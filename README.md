@@ -4,6 +4,9 @@ Developers: Simon Nilsson & Sandra Möttus
 
 A snake game written in HTML and javascript that is hosted on github pages.
 [Game Link](https://smottus.github.io)
+
+
+![Snake Game Picture](/pics/gamepic.png)
 ## Week 1: Plan
 
 - Decide what game/app to make.

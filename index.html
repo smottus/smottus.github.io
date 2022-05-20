@@ -1,27 +1,52 @@
 <html lang="eng">
-    <head>
-        <title>Snake Game</title>
-        <style>
-            canvas{
-                padding: 0;
-                margin: 0 auto;
-                display: block;
-            }
-            body {
-                background-color: #0e0e10;
-            }
-            #header {
-                text-align: center;
-                color: #efeff1;
-                font-family: "Arial",serif;
-                font-size: 40px;
-            }
-        </style>
-    </head>
-    <body>
-    <h1 id="header">Snake Game</h1>
-    <canvas id="myCanvas" width="608" height="672">
-    </canvas>
-    <script src="snake.js"></script>
-    </body>
+<head>
+    <title>Snake Game</title>
+    <style>
+        canvas {
+            padding: 0;
+            margin: 0 auto;
+            display: block;
+        }
+        body {
+            background-color: #0e0e10;
+        }
+        #header {
+            text-align: center;
+            color: #efeff1;
+            font-family: "Arial", serif;
+            font-size: 40px;
+        }
+        .flex-container{
+            position: absolute;
+            top: 80px;
+            left: 255px;
+        }
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            width: 400px;
+            height: 672px;
+            background-color:#1B331E;
+        }
+        .text-box {
+            text-align: center;
+            color: #efeff1;
+            font-size: 40px;
+            font-family: "Arial", serif;
+            margin: auto;
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+<div class="flex-container">
+    <div class="buttons">
+        <div class="text-box">Press R or Enter to play</div>
+        <div class="text-box">Use arrow keys or WASD to move</div>
+    </div>
+</div>
+<h1 id="header">Snake Game</h1>
+<canvas id="myCanvas" width="608" height="672"> </canvas>
+<script src="snake.js"></script>
+</body>
 </html>

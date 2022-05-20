@@ -100,16 +100,22 @@ function makeGapple() {
       gOnOff = 1;
       gapple.x = square + Math.floor(Math.random() * rows) * square;
       gapple.y = 3 * square + Math.floor(Math.random() * columns) * square;
+      setTimeout(switchgOnOff, 5000);
   }
 }
 
+function switchgOnOff() {
+  if (gOnOff === 1) {
+    gOnOff = 0;
+  }
+}
 
 function draw() {
   ctx.drawImage(background, 0, 0);
   ctx.fillText(points.toString(), 2.1 * square, 1.6 * square);
   ctx.drawImage(apple, square, 0.6 * square);
   ctx.drawImage(apple, food.x,food.y);
-  if(gOnOff == 1) {ctx.drawImage(goldenApple, gapple.x, gapple.y);}
+  if(gOnOff === 1) {ctx.drawImage(goldenApple, gapple.x, gapple.y);}
   else {makeGapple();}
   speed = 1000;
 
@@ -132,17 +138,18 @@ function draw() {
       break;
   }
 
-  if(snake[0].x == food.x && snake[0].y == food.y){
+  if(snake[0].x === food.x && snake[0].y === food.y){
     food.x = square + Math.floor(Math.random() * rows) * square;
     food.y = 3 * square + Math.floor(Math.random() * columns) * square;
     points++;
-  } else if (snake.length > 1) {
+  } else if(snake[0].x === gapple.x && snake[0].y === gapple.y && gOnOff === 1){
+    gOnOff = 0;
+    points += 5}
+  else if (snake.length > 1) {
     snake.pop();
   }
 
-  if(snake[0].x == gapple.x && snake[0].y == gapple.y){
-    gOnOff = 0;
-    points = points + 2;}
+
 
   let nextHead = {
     x: snake[0].x,
